@@ -4,17 +4,7 @@ import { DAYS } from "__fixture__/Date";
 import DateButton from "@components/button/DateButton";
 import { getDayNameByIndex, getOneWeekByDate } from "@utils/DateUtil";
 
-const Dates = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [renderedWeekArr, setRenderedWeekArr] = useState();
-
-  const renderedWeek = useMemo(() => {
-    return getOneWeekByDate(selectedDate);
-  }, [selectedDate]);
-  const onPressDateButton = (index) => {
-    setSelectedDate(renderedWeek[index]);
-  };
-
+const Dates = ({ selectedDate, renderedWeek, onPressDateButton }) => {
   const checkSelectDate = (date) => {
     return (
       date.getFullYear() === selectedDate.getFullYear() &&

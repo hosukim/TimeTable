@@ -1,5 +1,6 @@
 import { DAYS } from "__fixture__/Date";
 const TODAY = new Date();
+export const WEEK = 7;
 
 export const getDayNameByIndex = (index) => {
   return Object.values(DAYS).find((day) => day.code === index)?.text;
