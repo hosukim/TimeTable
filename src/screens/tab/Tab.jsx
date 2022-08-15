@@ -16,16 +16,24 @@ const Tab = () => {
   };
 
   const onPressPrevButton = () => {
-    setTempDateForRender(new Date(tempDateForRender.setDate(tempDateForRender.getDate() - WEEK)));
+    setTempDateForRender(
+      new Date(tempDateForRender.setDate(tempDateForRender.getDate() - WEEK))
+    );
   };
 
   const onPressNextButton = () => {
-    setTempDateForRender(new Date(tempDateForRender.setDate(tempDateForRender.getDate() + WEEK)));
+    setTempDateForRender(
+      new Date(tempDateForRender.setDate(tempDateForRender.getDate() + WEEK))
+    );
   };
   return (
     <View style={styles.block}>
       <AntDesign name="left" size={20} onPress={onPressPrevButton} />
-      <Dates selectedDate={selectedDate} renderedWeek={renderedWeek} onPressDateButton={onPressDateButton} />
+      <Dates
+        selectedDate={selectedDate}
+        renderedWeek={renderedWeek}
+        onPressDateButton={onPressDateButton}
+      />
       <AntDesign name="right" size={20} onPress={onPressNextButton} />
     </View>
   );
@@ -39,6 +47,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderBottomColor: "lightgray",
     borderBottomWidth: 1,
+    // flex: 1,
   },
 });
 
