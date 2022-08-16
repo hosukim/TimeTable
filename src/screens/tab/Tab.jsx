@@ -26,6 +26,7 @@ const Tab = () => {
       new Date(tempDateForRender.setDate(tempDateForRender.getDate() + WEEK))
     );
   };
+
   return (
     <View style={styles.block}>
       <AntDesign name="left" size={20} onPress={onPressPrevButton} />

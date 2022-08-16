@@ -89,7 +89,6 @@ function SvgClock() {
             data={data}
             padAngle={0.01}
             sort={(a, b) => a.key - b.key}
-            // valueAccessor={}
           >
             <Labels />
           </PieChart>
