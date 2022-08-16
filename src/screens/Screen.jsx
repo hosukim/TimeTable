@@ -1,13 +1,21 @@
 import { StyleSheet, View } from "react-native";
 import Tab from "./tab/Tab";
-import TimeTable from "./timeTable/TimeTable";
+import TimeTable from "./timetable/TimeTable";
+import {
+  TapGestureHandler,
+  RotationGestureHandler,
+  GestureHandlerRootView,
+  PanGestureHandler,
+} from "react-native-gesture-handler";
 
 const Screen = () => {
   return (
-    <View style={styles.wrap}>
-      <Tab />
-      <TimeTable />
-    </View>
+    <GestureHandlerRootView>
+      <View style={styles.wrap}>
+        <Tab />
+        <TimeTable />
+      </View>
+    </GestureHandlerRootView>
   );
 };
 
