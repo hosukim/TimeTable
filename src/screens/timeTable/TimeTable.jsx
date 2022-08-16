@@ -4,17 +4,15 @@ import Clock from "./clock/Clock";
 import SvgClock from "./clock/SvgClock";
 import {
   PanGestureHandler,
-  RotationGestureHandler,
+  GestureHandlerRootView,
 } from "react-native-gesture-handler";
 
 function TimeTable() {
   return (
-    <PanGestureHandler minDist={1} onGestureEvent={(e) => console.log(e)}>
-      <View style={styles.block}>
-        {/* <Clock /> */}
-        <SvgClock />
-      </View>
-    </PanGestureHandler>
+    <View style={styles.block}>
+      {/* <Clock /> */}
+      <SvgClock />
+    </View>
   );
 }
 

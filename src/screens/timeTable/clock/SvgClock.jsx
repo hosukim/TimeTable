@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+} from "react-native-gesture-handler";
 import { G } from "react-native-svg";
-import { Rect } from "react-native-svg";
 import { Text } from "react-native-svg";
 import { PieChart } from "react-native-svg-charts";
 
@@ -77,21 +79,23 @@ function SvgClock() {
     },
   ];
   return (
-    <View style={styles.block}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <PanGestureHandler minDist={1} onGestureEvent={(e) => console.log(e)}>
-        <PieChart
-          style={styles.pieChart}
-          outerRadius={"70%"}
-          innerRadius={10}
-          data={data}
-          padAngle={0.01}
-          sort={(a, b) => a.key - b.key}
-          // valueAccessor={}
-        >
-          <Labels />
-        </PieChart>
+        <View style={styles.clockBlock}>
+          <PieChart
+            style={styles.pieChart}
+            outerRadius={"70%"}
+            innerRadius={10}
+            data={data}
+            padAngle={0.01}
+            sort={(a, b) => a.key - b.key}
+            // valueAccessor={}
+          >
+            <Labels />
+          </PieChart>
+        </View>
       </PanGestureHandler>
-    </View>
+    </GestureHandlerRootView>
   );
 }
 
@@ -119,8 +123,9 @@ const Labels = ({ slices, height, width }) => {
 };
 
 const styles = StyleSheet.create({
-  block: {
-    flex: 1,
+  clockBlock: {
+    // flex: 1,
+    height: "50%",
   },
   pieChart: {
     height: "100%",
