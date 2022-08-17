@@ -19,3 +19,11 @@ export const calcAngleDegrees = (x, y) => {
   }
   return theta_x;
 };
+
+const RADIUS = 135;
+export const quadrant = {
+  one: [],
+  two: [],
+  three: [],
+  four: [],
+};

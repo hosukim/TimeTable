@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Tab from "./tab/Tab";
-import TimeTable from "./timetable/TimeTable";
+import TimeTable from "./timeTable/TimeTable";
 
 const Screen = () => {
   return (

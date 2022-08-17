@@ -27,7 +27,7 @@ function GestureCircle({ setArr, radius }) {
     };
   });
 
-  const findPieArea = (offsetX, offsetY) => {
+  const findPieArea = (touchX, touchY) => {
     let index;
     const arr = degrees();
     for (let i = 0; i < 24; i++) {
@@ -37,7 +37,7 @@ function GestureCircle({ setArr, radius }) {
       if (
         isIncludes(
           calcAngleDegrees(prev.x, prev.y),
-          calcAngleDegrees(offsetX, offsetY),
+          calcAngleDegrees(touchX, touchY),
           calcAngleDegrees(next.x, next.y)
         )
       ) {
@@ -104,7 +104,6 @@ function SvgClock() {
 const Labels = ({ slices, height, width }) => {
   return slices.map((slice, index) => {
     const { labelCentroid, pieCentroid, data } = slice;
-
     return index % 2 === 1 ? (
       <SvgText
         key={index}
