@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Dates from "@screens/tab/dates/Dates";

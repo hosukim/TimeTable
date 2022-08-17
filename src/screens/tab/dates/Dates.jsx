@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DAYS } from "__fixture__/Date";
 import DateButton from "@components/button/DateButton";

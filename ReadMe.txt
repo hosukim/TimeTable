@@ -4,6 +4,7 @@
 - babel-plugin-module-resolver : yarn add babel-plugin-module-resolver
 - web support : npx expo install react-native-web react-dom @expo/webpack-config
 - svg-charts : expo install react-native-svg, yarn add react-native-svg-charts
+- gesture handler : expo install react-native-gesture-handler, expo install react-native-reanimated (babel.config 수정)
 
 
 Ver.1 에서 쓰이지는 않지만 확장을 위해 설치해 둔 Library

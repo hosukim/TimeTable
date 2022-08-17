@@ -1,18 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Clock from "./clock/Clock";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SvgClock from "./clock/SvgClock";
-import {
-  PanGestureHandler,
-  GestureHandlerRootView,
-} from "react-native-gesture-handler";
 
 function TimeTable() {
   return (
-    <View style={styles.block}>
+    <GestureHandlerRootView style={styles.block}>
       {/* <Clock /> */}
       <SvgClock />
-    </View>
+    </GestureHandlerRootView>
   );
 }
 
