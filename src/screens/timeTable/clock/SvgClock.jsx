@@ -1,4 +1,8 @@
-import { calcAngleDegrees, getCoordinate } from "@utils/MathUtil";
+import {
+  calcAngleDegrees,
+  getRelativePosition,
+  QUADRANT,
+} from "@utils/MathUtil";
 import React, { useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
@@ -10,7 +14,7 @@ import { Text as SvgText } from "react-native-svg";
 import { PieChart } from "react-native-svg-charts";
 import { datas, degrees } from "./datas";
 
-function GestureCircle({ setArr, radius }) {
+function GestureCircle({ arr, setArr, radius }) {
   const isPressed = useSharedValue(false);
   const offset = useSharedValue({ x: 0, y: 0 });
 
@@ -28,45 +32,43 @@ function GestureCircle({ setArr, radius }) {
   });
 
   const findPieArea = (touchX, touchY) => {
-    let index;
-    const arr = degrees();
-    for (let i = 0; i < 24; i++) {
-      const prev = getCoordinate(radius, Math.abs(arr[i].min));
-      const next = getCoordinate(radius, Math.abs(arr[i].max));
-
-      if (
-        isIncludes(
-          calcAngleDegrees(prev.x, prev.y),
-          calcAngleDegrees(touchX, touchY),
-          calcAngleDegrees(next.x, next.y)
-        )
-      ) {
-        index = i;
-        break;
-      }
+    const touchedDegree = calcAngleDegrees(touchX, touchY);
+    if (touchX >= 0 && touchY >= 0) {
+      // 1사분면
+      const target = QUADRANT.one.find((item) => item.degree > touchedDegree);
+      return !!target ? target.value : 1;
+    } else if (touchX < 0 && touchY >= 0) {
+      // 2사분면
+      const target = QUADRANT.two.find((item) => item.degree > touchedDegree);
+      return !!target ? target.value : 19;
+    } else if (touchX < 0 && touchY < 0) {
+      // 3사분면
+      const target = QUADRANT.three.find((item) => item.degree > touchedDegree);
+      return !!target ? target.value : 13;
+    } else {
+      // 4사분면
+      const target = QUADRANT.four.find((item) => item.degree > touchedDegree);
+      return !!target ? target.value : 7;
     }
-    return index;
-  };
-
-  const isIncludes = (alpha, target, beta) => {
-    return target > alpha && target < beta;
   };
 
   const gesture = Gesture.Pan()
     .onBegin((e) => {
       "worklet";
       isPressed.value = true;
-      const x = e.x - radius;
-      const y = e.y < radius ? Math.abs(radius - e.y) : radius - e.y;
+      const { x, y } = getRelativePosition(e.x, e.y);
       const index = findPieArea(x, y);
-      setArr((prev) => [...prev, index]);
+      !arr.includes(index) && setArr((prev) => [...prev, index]);
     })
     .onChange((e) => {
       "worklet";
-      offset.value = {
-        x: e.x,
-        y: e.y,
-      };
+      // offset.value = {
+      //   x: e.x,
+      //   y: e.y,
+      // };
+      const { x, y } = getRelativePosition(e.x, e.y);
+      const index = findPieArea(x, y);
+      !arr.includes(index) && setArr((prev) => [...prev, index]);
     })
     .onFinalize(() => {
       "worklet";
@@ -96,7 +98,7 @@ function SvgClock() {
       >
         <Labels />
       </PieChart>
-      <GestureCircle setArr={setArr} radius={radius} />
+      <GestureCircle arr={arr} setArr={setArr} radius={radius} />
     </View>
   );
 }
