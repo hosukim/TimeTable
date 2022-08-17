@@ -3,7 +3,7 @@ import {
   getRelativePosition,
   QUADRANT,
 } from "@utils/MathUtil";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
 import Animated, {
@@ -16,7 +16,6 @@ import { datas, degrees } from "./datas";
 
 function GestureCircle({ arr, setArr, radius }) {
   const isPressed = useSharedValue(false);
-  const offset = useSharedValue({ x: 0, y: 0 });
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -27,7 +26,7 @@ function GestureCircle({ arr, setArr, radius }) {
       // ],
       backgroundColor: isPressed.value ? "yellow" : "blue",
       opacity: 0.1,
-      // backgroundColor: "(0, 0, 0, 0.5)",
+      backgroundColor: "(0, 0, 0, 0.5)",
     };
   });
 
@@ -83,9 +82,13 @@ function GestureCircle({ arr, setArr, radius }) {
   );
 }
 
-function SvgClock() {
+function SvgClock({ selectedDate }) {
   const [arr, setArr] = useState([]);
   const radius = 135;
+  useEffect(() => {
+    // AsyncStorage 에서 가져와서 여기 넣으면 됨 :)
+    setArr([]);
+  }, [selectedDate]);
   return (
     <View style={[styles.clockBlock]}>
       <PieChart
@@ -117,6 +120,7 @@ const Labels = ({ slices, height, width }) => {
         fontSize={13}
         stroke={"black"}
         strokeWidth={0.1}
+        translateX={20}
       >
         {data.key}
       </SvgText>

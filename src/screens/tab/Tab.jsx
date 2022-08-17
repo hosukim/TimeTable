@@ -5,8 +5,7 @@ import Dates from "@screens/tab/dates/Dates";
 import { useMemo, useState } from "react";
 import { getOneWeekByDate, WEEK } from "@utils/DateUtil";
 
-const Tab = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const Tab = ({ selectedDate, setSelectedDate }) => {
   const [tempDateForRender, setTempDateForRender] = useState(new Date());
   const renderedWeek = useMemo(() => {
     return getOneWeekByDate(tempDateForRender);
