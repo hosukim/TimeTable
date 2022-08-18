@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Dates from "@screens/tab/dates/Dates";
 import { useMemo, useState } from "react";
-import { getOneWeekByDate, WEEK } from "@utils/DateUtil";
+import { formatDateToYYYYMMDD, getOneWeekByDate, WEEK } from "@utils/DateUtil";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = ({ selectedDate, setSelectedDate }) => {
   const [tempDateForRender, setTempDateForRender] = useState(new Date());
   const renderedWeek = useMemo(() => {
     return getOneWeekByDate(tempDateForRender);
   }, [tempDateForRender]);
+
+  useEffect(() => {
+    const formatDate = formatDateToYYYYMMDD(selectedDate);
+    const getSchedulesBySelectedDate = async () => {
+      console.log(formatDate);
+      return await AsyncStorage.getItem(formatDate);
+    };
+    getSchedulesBySelectedDate()
+      .then((jsonValue) => {
+        if (jsonValue !== null) {
+          console.log("-----------");
+          console.log(jsonValue);
+        } else {
+          console.log("-----------");
+          console.log(jsonValue);
+        }
+      })
+      .catch((error) => {
+        console.log("--error--");
+        console.log(error);
+      });
+  }, [selectedDate]);
 
   const onPressDateButton = (index) => {
     setSelectedDate(renderedWeek[index]);

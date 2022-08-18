@@ -10,9 +10,13 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function GestureCircle({ schedules, setSchedules, radius }) {
+function GestureCircle({
+  schedules,
+  setSchedules,
+  radius,
+  setSeletedTimeArray,
+}) {
   const pressIndex = useSharedValue();
 
   const animatedStyles = useAnimatedStyle(() => {
@@ -82,6 +86,7 @@ function GestureCircle({ schedules, setSchedules, radius }) {
       }
     })
     .onFinalize(() => {
+      setSeletedTimeArray(pressingArr);
       pressingArr.length !== 0 && setPressingArr([]);
       pressIndex.value = null;
     });

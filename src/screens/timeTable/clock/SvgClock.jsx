@@ -6,7 +6,7 @@ import { datas, translateDatas } from "./datas";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GestureCircle from "./GestureCircle";
 
-function SvgClock({ selectedDate }) {
+function SvgClock({ selectedDate, setSeletedTimeArray }) {
   const [schedules, setSchedules] = useState([]);
   const radius = 135;
 
@@ -39,6 +39,7 @@ function SvgClock({ selectedDate }) {
         schedules={schedules}
         setSchedules={setSchedules}
         radius={radius}
+        setSeletedTimeArray={setSeletedTimeArray}
       />
     </View>
   );

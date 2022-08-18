@@ -6,11 +6,18 @@ import TimeTable from "./timeTable/TimeTable";
 
 const Screen = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTimeArray, setSeletedTimeArray] = useState([]);
   return (
     <View style={styles.wrap}>
       <Tab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-      <TimeTable selectedDate={selectedDate} />
-      <SubmitForm />
+      <TimeTable
+        selectedDate={selectedDate}
+        setSeletedTimeArray={setSeletedTimeArray}
+      />
+      <SubmitForm
+        selectedDate={selectedDate}
+        selectedTimeArray={selectedTimeArray}
+      />
     </View>
   );
 };
