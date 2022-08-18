@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderBottomColor: "lightgray",
     borderBottomWidth: 1,
-    // flex: 1,
   },
 });
 

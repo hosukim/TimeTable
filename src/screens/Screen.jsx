@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import SubmitForm from "./form/SubmitForm";
 import Tab from "./tab/Tab";
 import TimeTable from "./timeTable/TimeTable";
 
@@ -9,6 +10,7 @@ const Screen = () => {
     <View style={styles.wrap}>
       <Tab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TimeTable selectedDate={selectedDate} />
+      <SubmitForm />
     </View>
   );
 };

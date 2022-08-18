@@ -5,7 +5,7 @@
 - web support : npx expo install react-native-web react-dom @expo/webpack-config
 - svg-charts : expo install react-native-svg, yarn add react-native-svg-charts
 - gesture handler : expo install react-native-gesture-handler, expo install react-native-reanimated (babel.config 수정)
-
+- useForm : yarn add react-hook-form
 
 Ver.1 에서 쓰이지는 않지만 확장을 위해 설치해 둔 Library
 - Navigation : yarn add @react-navigation/native, expo install react-native-screens react-native-safe-area-context
