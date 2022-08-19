@@ -37,3 +37,11 @@ export const formatDateToYYYYMMDD = (date) => {
 
   return [year, month, day].join("");
 };
+
+export const format2Words = (word) => {
+  if (("" + word).length < 2) {
+    return "0" + word;
+  } else {
+    return word;
+  }
+};

@@ -1,40 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import ControllButtons from "./buttons/ControllButtons";
 import InputForm from "./inputForm/InputForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { formatDateToYYYYMMDD } from "@utils/DateUtil";
 
-function SubmitForm({ selectedDate, selectedTimeArray }) {
+function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
   const [values, setValues] = useState({
     title: null,
-    startDate: null,
-    endDate: null,
+    startTime: null,
+    endTime: null,
     memo: null,
   });
   const onSubmit = async () => {
     const formatDate = formatDateToYYYYMMDD(selectedDate);
-
     try {
-      checkStorageIncludesHistory()
+      checkStorageIncludesScheduleByDate()
         .then(async (flag) => {
           const jsonValue = flag ? await AsyncStorage.getItem(formatDate) : {};
           return flag ? JSON.parse(jsonValue) : [];
         })
-        .then(async (array) => {
-          array.push(values);
-          const datas = {
-            scheduleTime: selectedTimeArray,
-            values: array,
-          };
-          await AsyncStorage.setItem(formatDate, JSON.stringify(datas));
+        .then(async (schedules) => {
+          // schedules : [{ scheduleTime: <Int[]>, values: <values[]> }]
+          schedules.push({ scheduleTime: selectedTimeArray, values: values });
+          await AsyncStorage.setItem(formatDate, JSON.stringify(schedules));
+        })
+        .then(() => {
+          clearTimeArray();
+          clearValues();
         });
     } catch (error) {
       console.error(error);
     }
   };
 
-  const checkStorageIncludesHistory = async (formatDate) => {
+  const clearValues = useCallback(() => {
+    setValues({
+      title: null,
+      startTime: null,
+      endTime: null,
+      memo: null,
+    });
+  }, [values]);
+
+  const checkStorageIncludesScheduleByDate = async (formatDate) => {
     let keys = await AsyncStorage.getAllKeys();
     return keys.includes(formatDate);
   };

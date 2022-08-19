@@ -18,7 +18,7 @@ function ControllButtons({ onSubmit }) {
       <View style={styles.right}>
         <AntDesign
           name="delete"
-          size={30}
+          size={25}
           onPress={onPressDeleteButton}
           style={styles.button}
         />
@@ -39,16 +39,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "flex-start",
     justifyContent: "center",
-    marginTop: 6,
   },
   left: {
     flex: 1,
     alignItems: "flex-start",
+    justifyContent: "center",
   },
   right: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
+    alignItems: "center",
   },
   button: {
     marginLeft: 6,
