@@ -1,13 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, TextInput, Text, Pressable } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format2Words } from "@utils/DateUtil";
 
-function InputForm({ setValues }) {
+function InputForm({ setValues, selectedTimeArray }) {
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [startTimePickerShow, setStartTimePickerShow] = useState(false);
   const [endTimePickerShow, setEndTimePickerShow] = useState(false);
+
+  useEffect(() => {
+    if (Array.isArray(selectedTimeArray) && selectedTimeArray.length !== 0) {
+      setStartTime(
+        new Date(
+          startTime.getFullYear(),
+          startTime.getMonth(),
+          startTime.getDate(),
+          Number(selectedTimeArray[0]) - 1
+        )
+      );
+      setEndTime(
+        new Date(
+          endTime.getFullYear(),
+          endTime.getMonth(),
+          endTime.getDate(),
+          Number(selectedTimeArray[selectedTimeArray.length - 1])
+        )
+      );
+    }
+  }, [selectedTimeArray]);
+
+  useEffect(() => {
+    console.log("---endTiem : " + endTime);
+  }, [endTime]);
 
   const onChangeHandler = (name, text) => {
     setValues((prev) => ({

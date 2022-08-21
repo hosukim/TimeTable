@@ -12,6 +12,7 @@ function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
     endTime: null,
     memo: null,
   });
+
   const onSubmit = async () => {
     const formatDate = formatDateToYYYYMMDD(selectedDate);
     try {
@@ -51,7 +52,7 @@ function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
   return (
     <View style={stlyes.block}>
       <ControllButtons onSubmit={onSubmit} />
-      <InputForm setValues={setValues} />
+      <InputForm setValues={setValues} selectedTimeArray={selectedTimeArray} />
     </View>
   );
 }
