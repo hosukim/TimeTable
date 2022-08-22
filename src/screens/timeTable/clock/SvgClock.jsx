@@ -5,22 +5,33 @@ import { PieChart } from "react-native-svg-charts";
 import { datas, translateDatas } from "./datas";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GestureCircle from "./GestureCircle";
+import { checkStorageIncludesScheduleByDate } from "@utils/StorageUtil";
+import { formatDateToYYYYMMDD } from "@utils/DateUtil";
 
 function SvgClock({ selectedDate, setSeletedTimeArray }) {
   const [schedules, setSchedules] = useState([]);
   const radius = 135;
 
   useEffect(() => {
-    const onChangeDateHandler = async () => {
-      const jsonValue = await AsyncStorage.getItem("data");
-      if (jsonValue != null) {
-        return [];
-      }
-      return [];
+    const formatDate = formatDateToYYYYMMDD(selectedDate);
+    checkStorageIncludesScheduleByDate(formatDate)
+      .then(async (flag) => {
+        if (flag) {
+          const jsonValue = await AsyncStorage.getItem(formatDate);
+          const schedules = JSON.parse(jsonValue);
+          if (Array.isArray(schedules) && schedules.length !== 0) {
+            schedules.forEach((schedule) => {
+              setSchedules((prev) => [...prev, schedule.scheduleTime]);
+            });
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return () => {
+      setSchedules([]);
     };
-    onChangeDateHandler().then((res) => {
-      setSchedules(res);
-    });
   }, [selectedDate]);
 
   return (

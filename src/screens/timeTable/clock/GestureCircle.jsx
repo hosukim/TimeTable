@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   calcAngleDegrees,
   QUADRANT,
@@ -18,7 +18,6 @@ function GestureCircle({
   setSeletedTimeArray,
 }) {
   const pressIndex = useSharedValue();
-
   const animatedStyles = useAnimatedStyle(() => {
     return {
       // backgroundColor: isPressed.value ? "yellow" : "blue",
@@ -56,7 +55,6 @@ function GestureCircle({
       const areaIndex = findPieArea(x, y);
       pressIndex.value = areaIndex;
       if (!schedules.includes(areaIndex)) {
-        setSchedules((prev) => [...prev, areaIndex]);
         setPressingArr((prev) => [...prev, areaIndex]);
       }
     })
@@ -68,25 +66,18 @@ function GestureCircle({
       if (pressIndex.value <= areaIndex) {
         const isFrontBack = pressingArr.find((val) => val > areaIndex);
         if (isFrontBack) {
-          setSchedules((prev) => prev.filter((val) => val !== isFrontBack));
+          setPressingArr((prev) => prev.filter((val) => val !== isFrontBack));
         }
       }
 
-      // 뒤로 갔다가 앞으로 오는 경우
-      //   if (pressIndex.value >= areaIndex) {
-      //     const isBackFront = pressingArr.find((val) => val < areaIndex);
-      //     if (isBackFront) {
-      //       setSchedules((prev) => prev.filter((val) => val !== isBackFront));
-      //     }
-      //   }
-
       if (!schedules.includes(areaIndex)) {
-        setSchedules((prev) => [...prev, areaIndex]);
         setPressingArr((prev) => [...prev, areaIndex]);
       }
     })
     .onFinalize(() => {
-      setSeletedTimeArray(pressingArr);
+      const newPressingArr = Array.from(new Set(pressingArr));
+      setSeletedTimeArray(newPressingArr);
+      setSchedules((prev) => [...prev, ...new Array(newPressingArr)]);
       pressingArr.length !== 0 && setPressingArr([]);
       pressIndex.value = null;
     });

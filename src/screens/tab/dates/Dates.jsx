@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DAYS } from "__fixture__/Date";
 import DateButton from "@components/button/DateButton";
-import { getDayNameByIndex, getOneWeekByDate } from "@utils/DateUtil";
+import { formatDateToYYYYMMDD, getDayNameByIndex } from "@utils/DateUtil";
+import { checkStorageIncludesScheduleByDate } from "@utils/StorageUtil";
 
 const Dates = ({ selectedDate, renderedWeek, onPressDateButton }) => {
+  const [scheduleFlagArr, setScheduleFlagArr] = useState([]);
+
+  useEffect(() => {
+    const checkSchduleDate = async (date) => {
+      const formatDate = formatDateToYYYYMMDD(date);
+      const flag = await checkStorageIncludesScheduleByDate(formatDate);
+      setScheduleFlagArr((prev) => [...prev, flag]);
+    };
+    renderedWeek.forEach((date) => {
+      checkSchduleDate(date);
+    });
+    return () => {
+      setScheduleFlagArr([]);
+    };
+  }, [renderedWeek]);
+
   const checkSelectDate = (date) => {
     return (
       date.getFullYear() === selectedDate.getFullYear() &&
@@ -29,9 +46,8 @@ const Dates = ({ selectedDate, renderedWeek, onPressDateButton }) => {
               <Text>{getDayNameByIndex(index)}</Text>
               <DateButton
                 text={renderedWeek[index].getDate()}
-                onPressHandler={() => {
-                  onPressDateButton(index);
-                }}
+                onPressHandler={() => onPressDateButton(index)}
+                noScheduleFlag={!scheduleFlagArr[index]}
               />
             </TouchableOpacity>
           );

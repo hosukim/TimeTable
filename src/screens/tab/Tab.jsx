@@ -15,21 +15,15 @@ const Tab = ({ selectedDate, setSelectedDate }) => {
   useEffect(() => {
     const formatDate = formatDateToYYYYMMDD(selectedDate);
     const getSchedulesBySelectedDate = async () => {
-      console.log(formatDate);
       return await AsyncStorage.getItem(formatDate);
     };
     getSchedulesBySelectedDate()
       .then((jsonValue) => {
         if (jsonValue !== null) {
-          console.log("-----------");
-          console.log(jsonValue);
         } else {
-          console.log("-----------");
-          console.log(jsonValue);
         }
       })
       .catch((error) => {
-        console.log("--error--");
         console.log(error);
       });
   }, [selectedDate]);

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import SubmitForm from "./form/SubmitForm";
 import Tab from "./tab/Tab";
@@ -12,6 +12,10 @@ const Screen = () => {
     setSeletedTimeArray([]);
   }, [selectedTimeArray]);
 
+  useEffect(() => {
+    clearTimeArray();
+  }, [selectedDate]);
+
   return (
     <View style={styles.wrap}>
       <Tab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
@@ -19,11 +23,15 @@ const Screen = () => {
         selectedDate={selectedDate}
         setSeletedTimeArray={setSeletedTimeArray}
       />
-      <SubmitForm
-        selectedDate={selectedDate}
-        selectedTimeArray={selectedTimeArray}
-        clearTimeArray={clearTimeArray}
-      />
+      {selectedTimeArray.length !== 0 ? (
+        <SubmitForm
+          selectedDate={selectedDate}
+          selectedTimeArray={selectedTimeArray}
+          clearTimeArray={clearTimeArray}
+        />
+      ) : (
+        <View style={styles.tempView}></View>
+      )}
     </View>
   );
 };
@@ -34,6 +42,10 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingLeft: 10,
     paddingRight: 10,
+  },
+  tempView: {
+    flex: 1,
+    paddingBottom: 10,
   },
 });
 

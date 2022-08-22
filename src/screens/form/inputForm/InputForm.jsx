@@ -30,10 +30,6 @@ function InputForm({ setValues, selectedTimeArray }) {
     }
   }, [selectedTimeArray]);
 
-  useEffect(() => {
-    console.log("---endTiem : " + endTime);
-  }, [endTime]);
-
   const onChangeHandler = (name, text) => {
     setValues((prev) => ({
       ...prev,
@@ -41,7 +37,6 @@ function InputForm({ setValues, selectedTimeArray }) {
     }));
   };
   const onChangeStartTime = (event, selectedTime) => {
-    console.log("selectedTime: " + selectedTime);
     setStartTimePickerShow(false);
     setStartTime(selectedTime);
     setValues((prev) => ({
@@ -50,7 +45,6 @@ function InputForm({ setValues, selectedTimeArray }) {
     }));
   };
   const onChangeEndTime = (event, selectedTime) => {
-    console.log("selectedTime: " + selectedTime);
     setEndTimePickerShow(false);
     setEndTime(selectedTime);
     setValues((prev) => ({

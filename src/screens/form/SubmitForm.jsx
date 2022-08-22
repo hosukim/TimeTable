@@ -4,6 +4,7 @@ import ControllButtons from "./buttons/ControllButtons";
 import InputForm from "./inputForm/InputForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { formatDateToYYYYMMDD } from "@utils/DateUtil";
+import { checkStorageIncludesScheduleByDate } from "@utils/StorageUtil";
 
 function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
   const [values, setValues] = useState({
@@ -16,7 +17,7 @@ function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
   const onSubmit = async () => {
     const formatDate = formatDateToYYYYMMDD(selectedDate);
     try {
-      checkStorageIncludesScheduleByDate()
+      checkStorageIncludesScheduleByDate(formatDate)
         .then(async (flag) => {
           const jsonValue = flag ? await AsyncStorage.getItem(formatDate) : {};
           return flag ? JSON.parse(jsonValue) : [];
@@ -43,11 +44,6 @@ function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
       memo: null,
     });
   }, [values]);
-
-  const checkStorageIncludesScheduleByDate = async (formatDate) => {
-    let keys = await AsyncStorage.getAllKeys();
-    return keys.includes(formatDate);
-  };
 
   return (
     <View style={stlyes.block}>
