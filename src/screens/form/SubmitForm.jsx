@@ -59,6 +59,7 @@ const stlyes = StyleSheet.create({
     // height: "100%",
     paddingBottom: 10,
     backgroundColor: "yellow",
+    justifyContent: "flex-end",
   },
 });
 

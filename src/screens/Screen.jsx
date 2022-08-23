@@ -24,30 +24,42 @@ const Screen = () => {
     clearTimeArray();
   }, [selectedDate]);
 
+  // useEffect(() => {
+  //   Keyboard.addListener("keyboardDidShow", (e) => {
+  //     console.log(e.endCoordinates.height);
+  //     formRef.current.state.bottom = 0;
+  //   });
+  // }, []);
+
   return (
-    <View style={styles.wrap}>
+    // <View style={styles.wrap}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "position"}
+      style={styles.wrap}
+      keyboardVerticalOffset={20}
+      contentContainerStyle={{ flex: 1, backgroundColor: "blue" }}
+    >
       <Tab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TimeTable
         selectedDate={selectedDate}
         setSeletedTimeArray={setSeletedTimeArray}
       />
       {selectedTimeArray.length !== 0 ? (
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "position"}
-          style={styles.container}
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+          style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
         >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <SubmitForm
-              selectedDate={selectedDate}
-              selectedTimeArray={selectedTimeArray}
-              clearTimeArray={clearTimeArray}
-            />
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+          <SubmitForm
+            selectedDate={selectedDate}
+            selectedTimeArray={selectedTimeArray}
+            clearTimeArray={clearTimeArray}
+          />
+        </TouchableWithoutFeedback>
       ) : (
         <ScheduleList selectedDate={selectedDate} />
       )}
-    </View>
+    </KeyboardAvoidingView>
+    // </View>
   );
 };
 
@@ -60,7 +72,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // height: "100%",
   },
 });
 
