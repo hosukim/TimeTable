@@ -30,6 +30,14 @@ function InputForm({ setValues, selectedTimeArray }) {
     }
   }, [selectedTimeArray]);
 
+  useEffect(() => {
+    setValues((prev) => ({
+      ...prev,
+      ["startTime"]: startTime,
+      ["endTime"]: endTime,
+    }));
+  }, [startTime, endTime]);
+
   const onChangeHandler = (name, text) => {
     setValues((prev) => ({
       ...prev,
@@ -39,18 +47,10 @@ function InputForm({ setValues, selectedTimeArray }) {
   const onChangeStartTime = (event, selectedTime) => {
     setStartTimePickerShow(false);
     setStartTime(selectedTime);
-    setValues((prev) => ({
-      ...prev,
-      ["startTime"]: selectedTime,
-    }));
   };
   const onChangeEndTime = (event, selectedTime) => {
     setEndTimePickerShow(false);
     setEndTime(selectedTime);
-    setValues((prev) => ({
-      ...prev,
-      ["endTime"]: selectedTime,
-    }));
   };
   return (
     <View style={stlyes.container}>

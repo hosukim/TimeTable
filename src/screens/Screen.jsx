@@ -1,6 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import SubmitForm from "./form/SubmitForm";
+import ScheduleList from "./scheduleList/ScheduleList";
 import Tab from "./tab/Tab";
 import TimeTable from "./timeTable/TimeTable";
 
@@ -24,13 +32,20 @@ const Screen = () => {
         setSeletedTimeArray={setSeletedTimeArray}
       />
       {selectedTimeArray.length !== 0 ? (
-        <SubmitForm
-          selectedDate={selectedDate}
-          selectedTimeArray={selectedTimeArray}
-          clearTimeArray={clearTimeArray}
-        />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "position"}
+          style={styles.container}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <SubmitForm
+              selectedDate={selectedDate}
+              selectedTimeArray={selectedTimeArray}
+              clearTimeArray={clearTimeArray}
+            />
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       ) : (
-        <View style={styles.tempView}></View>
+        <ScheduleList selectedDate={selectedDate} />
       )}
     </View>
   );
@@ -43,9 +58,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  tempView: {
+  container: {
     flex: 1,
-    paddingBottom: 10,
+    // height: "100%",
   },
 });
 

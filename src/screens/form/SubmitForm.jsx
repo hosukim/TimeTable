@@ -56,6 +56,7 @@ function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
 const stlyes = StyleSheet.create({
   block: {
     flex: 1,
+    // height: "100%",
     paddingBottom: 10,
     backgroundColor: "yellow",
   },
