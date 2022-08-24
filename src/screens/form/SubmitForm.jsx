@@ -36,6 +36,10 @@ function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
     }
   };
 
+  const onClose = () => {
+    clearTimeArray();
+  };
+
   const clearValues = useCallback(() => {
     setValues({
       title: null,
@@ -47,7 +51,7 @@ function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
 
   return (
     <View style={stlyes.block}>
-      <ControllButtons onSubmit={onSubmit} />
+      <ControllButtons onSubmit={onSubmit} onClose={onClose} />
       <InputForm setValues={setValues} selectedTimeArray={selectedTimeArray} />
     </View>
   );
@@ -56,10 +60,10 @@ function SubmitForm({ selectedDate, selectedTimeArray, clearTimeArray }) {
 const stlyes = StyleSheet.create({
   block: {
     flex: 1,
-    // height: "100%",
     paddingBottom: 10,
-    backgroundColor: "yellow",
-    justifyContent: "flex-end",
+    backgroundColor: "#e7fff8",
+    justifyContent: "center",
+    width: "100%",
   },
 });
 

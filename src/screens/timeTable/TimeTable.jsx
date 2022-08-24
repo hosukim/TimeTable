@@ -3,13 +3,14 @@ import { StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SvgClock from "./clock/SvgClock";
 
-function TimeTable({ selectedDate, setSeletedTimeArray }) {
+function TimeTable({ selectedDate, selectedTimeArray, setSelectedTimeArray }) {
   return (
     <GestureHandlerRootView style={styles.block}>
       {/* <Clock /> */}
       <SvgClock
         selectedDate={selectedDate}
-        setSeletedTimeArray={setSeletedTimeArray}
+        selectedTimeArray={selectedTimeArray}
+        setSelectedTimeArray={setSelectedTimeArray}
       />
     </GestureHandlerRootView>
   );

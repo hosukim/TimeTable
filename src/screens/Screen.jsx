@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -14,64 +15,61 @@ import TimeTable from "./timeTable/TimeTable";
 
 const Screen = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTimeArray, setSeletedTimeArray] = useState([]);
+  const [selectedTimeArray, setSelectedTimeArray] = useState([]);
 
   const clearTimeArray = useCallback(() => {
-    setSeletedTimeArray([]);
+    setSelectedTimeArray([]);
   }, [selectedTimeArray]);
 
   useEffect(() => {
     clearTimeArray();
   }, [selectedDate]);
 
-  // useEffect(() => {
-  //   Keyboard.addListener("keyboardDidShow", (e) => {
-  //     console.log(e.endCoordinates.height);
-  //     formRef.current.state.bottom = 0;
-  //   });
-  // }, []);
-
   return (
-    // <View style={styles.wrap}>
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "position"}
-      style={styles.wrap}
-      keyboardVerticalOffset={20}
-      contentContainerStyle={{ flex: 1, backgroundColor: "blue" }}
-    >
+    <View style={styles.wrap}>
       <Tab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TimeTable
         selectedDate={selectedDate}
-        setSeletedTimeArray={setSeletedTimeArray}
+        selectedTimeArray={selectedTimeArray}
+        setSelectedTimeArray={setSelectedTimeArray}
       />
-      {selectedTimeArray.length !== 0 ? (
-        <TouchableWithoutFeedback
-          onPress={Keyboard.dismiss}
-          style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
+      {selectedTimeArray.length !== 0 && (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.container}
+          keyboardVerticalOffset={100}
         >
-          <SubmitForm
-            selectedDate={selectedDate}
-            selectedTimeArray={selectedTimeArray}
-            clearTimeArray={clearTimeArray}
-          />
-        </TouchableWithoutFeedback>
-      ) : (
-        <ScheduleList selectedDate={selectedDate} />
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <SubmitForm
+              selectedDate={selectedDate}
+              selectedTimeArray={selectedTimeArray}
+              clearTimeArray={clearTimeArray}
+            />
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       )}
-    </KeyboardAvoidingView>
-    // </View>
+      <ScheduleList selectedDate={selectedDate} />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   wrap: {
+    // flex: 1,
     width: "100%",
     height: "100%",
     paddingLeft: 10,
     paddingRight: 10,
+    position: "relative",
   },
   container: {
     flex: 1,
+    zIndex: 99,
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+    left: 10,
+    height: 310,
   },
 });
 

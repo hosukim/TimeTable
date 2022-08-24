@@ -2,8 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-function ControllButtons({ onSubmit }) {
-  const onPressCloseButton = () => {};
+function ControllButtons({ onSubmit, onClose }) {
   const onPressDeleteButton = () => {};
   return (
     <View style={styles.block}>
@@ -11,8 +10,8 @@ function ControllButtons({ onSubmit }) {
         <AntDesign
           name="close"
           size={30}
+          onPress={onClose}
           style={styles.button}
-          onPress={onPressCloseButton}
         />
       </View>
       <View style={styles.right}>

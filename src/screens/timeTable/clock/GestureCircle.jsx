@@ -15,16 +15,24 @@ function GestureCircle({
   schedules,
   setSchedules,
   radius,
-  setSeletedTimeArray,
+  selectedTimeArray,
+  setSelectedTimeArray,
 }) {
+  const [pressingArr, setPressingArr] = useState([]);
   const pressIndex = useSharedValue();
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      // backgroundColor: isPressed.value ? "yellow" : "blue",
       opacity: 0.1,
       backgroundColor: "(0, 0, 0, 0.5)",
     };
   });
+
+  useEffect(() => {
+    selectedTimeArray.length === 0 &&
+      setSchedules((prev) =>
+        prev.filter((_, index) => index !== schedules.length - 1)
+      );
+  }, [selectedTimeArray]);
 
   const findPieArea = (touchX, touchY) => {
     const touchedDegree = calcAngleDegrees(touchX, touchY);
@@ -47,15 +55,15 @@ function GestureCircle({
     }
   };
 
-  const [pressingArr, setPressingArr] = useState([]);
-
   const gesture = Gesture.Pan()
     .onBegin((e) => {
       const { x, y } = getRelativePosition(e.x, e.y);
       const areaIndex = findPieArea(x, y);
       pressIndex.value = areaIndex;
-      if (!schedules.includes(areaIndex)) {
+      // schedules 타입 [[], []]
+      if (!schedules.find((arr) => arr.includes(areaIndex))) {
         setPressingArr((prev) => [...prev, areaIndex]);
+      } else {
       }
     })
     .onChange((e) => {
@@ -76,7 +84,7 @@ function GestureCircle({
     })
     .onFinalize(() => {
       const newPressingArr = Array.from(new Set(pressingArr));
-      setSeletedTimeArray(newPressingArr);
+      setSelectedTimeArray(newPressingArr);
       setSchedules((prev) => [...prev, ...new Array(newPressingArr)]);
       pressingArr.length !== 0 && setPressingArr([]);
       pressIndex.value = null;

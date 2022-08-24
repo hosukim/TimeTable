@@ -68,7 +68,7 @@ const styles = (isToday) =>
       textAlign: "center",
       alignItems: "center",
       paddingVertical: 10,
-      backgroundColor: isToday ? "skyblue" : "transparent",
+      backgroundColor: isToday ? "#e7f4ff" : "transparent",
       borderRadius: 5,
     },
   });

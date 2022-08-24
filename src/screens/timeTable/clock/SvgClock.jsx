@@ -8,7 +8,7 @@ import GestureCircle from "./GestureCircle";
 import { checkStorageIncludesScheduleByDate } from "@utils/StorageUtil";
 import { formatDateToYYYYMMDD } from "@utils/DateUtil";
 
-function SvgClock({ selectedDate, setSeletedTimeArray }) {
+function SvgClock({ selectedDate, selectedTimeArray, setSelectedTimeArray }) {
   const [schedules, setSchedules] = useState([]);
   const radius = 135;
 
@@ -50,7 +50,8 @@ function SvgClock({ selectedDate, setSeletedTimeArray }) {
         schedules={schedules}
         setSchedules={setSchedules}
         radius={radius}
-        setSeletedTimeArray={setSeletedTimeArray}
+        selectedTimeArray={selectedTimeArray}
+        setSelectedTimeArray={setSelectedTimeArray}
       />
     </View>
   );

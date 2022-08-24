@@ -6,8 +6,8 @@ export const datas = (arrays) => {
       value: 1,
       svg: {
         fill: arrays.find((item) => item.includes(index + 1))
-          ? "#000000"
-          : "#efefef",
+          ? "#9beaff"
+          : "#e7fff8",
       },
     }));
 };

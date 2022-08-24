@@ -21,7 +21,7 @@ const styles = (noSchedule) =>
       justifyContent: "center",
       alignItems: "center",
       borderRadius: 100,
-      backgroundColor: noSchedule ? "#f8f9fa" : "#009900",
+      backgroundColor: noSchedule ? "#fff" : "#ffece7",
       borderColor: "#333",
       borderWidth: 1,
     },
