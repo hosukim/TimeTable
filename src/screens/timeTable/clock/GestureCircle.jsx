@@ -58,11 +58,14 @@ function GestureCircle({
   const gesture = Gesture.Pan()
     .minDistance(10)
     .onBegin((e) => {
-      console.log("0000");
-      // checkSelectedTimeArrayIsEmpty();
-      console.log("까꿍");
-      const { x, y } = getRelativePosition(e.x, e.y);
+      if (selectedTimeArray.length !== 0) {
+        setSelectedTimeArray([]);
+      }
+      // const { x, y } = getRelativePosition(e.x, e.y);
+      const x = e.x - radius;
+      const y = e.y < radius ? Math.abs(radius - e.y) : radius - e.y;
       console.log("x : " + x + " || y : " + y);
+
       const areaIndex = findPieArea(x, y);
       console.log("areaIndex : " + areaIndex);
       pressIndex.value = areaIndex;
@@ -91,15 +94,6 @@ function GestureCircle({
       pressingArr.length !== 0 && setPressingArr([]);
       pressIndex.value = null;
     });
-
-  const checkSelectedTimeArrayIsEmpty = () => {
-    console.log(111);
-    if (selectedTimeArray?.length !== 0) {
-      console.log(222);
-      setSelectedTimeArray([]);
-    }
-    console.log(333);
-  };
 
   return (
     <GestureDetector gesture={gesture}>
