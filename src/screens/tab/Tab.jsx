@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingBottom: 20,
-    borderBottomColor: "lightgray",
+    borderBottomColor: "#d3d3d3",
     borderBottomWidth: 1,
   },
 });

@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SubmitForm from "./form/SubmitForm";
 import ScheduleList from "./scheduleList/ScheduleList";
 import Tab from "./tab/Tab";
@@ -17,16 +18,16 @@ const Screen = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTimeArray, setSelectedTimeArray] = useState([]);
 
-  const clearTimeArray = useCallback(() => {
+  const clearTimeArray = () => {
     setSelectedTimeArray([]);
-  }, [selectedTimeArray]);
+  };
 
   useEffect(() => {
     clearTimeArray();
   }, [selectedDate]);
 
   return (
-    <View style={styles.wrap}>
+    <GestureHandlerRootView style={styles.wrap}>
       <Tab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TimeTable
         selectedDate={selectedDate}
@@ -49,7 +50,7 @@ const Screen = () => {
         </KeyboardAvoidingView>
       )}
       <ScheduleList selectedDate={selectedDate} />
-    </View>
+    </GestureHandlerRootView>
   );
 };
 

@@ -56,20 +56,22 @@ function GestureCircle({
   };
 
   const gesture = Gesture.Pan()
+    .minDistance(10)
     .onBegin((e) => {
+      console.log("0000");
+      // checkSelectedTimeArrayIsEmpty();
+      console.log("까꿍");
       const { x, y } = getRelativePosition(e.x, e.y);
+      console.log("x : " + x + " || y : " + y);
       const areaIndex = findPieArea(x, y);
+      console.log("areaIndex : " + areaIndex);
       pressIndex.value = areaIndex;
-      // schedules 타입 [[], []]
-      if (!schedules.find((arr) => arr.includes(areaIndex))) {
-        setPressingArr((prev) => [...prev, areaIndex]);
-      } else {
-      }
+
+      setPressingArr((prev) => [...prev, areaIndex]);
     })
     .onChange((e) => {
       const { x, y } = getRelativePosition(e.x, e.y);
       const areaIndex = findPieArea(x, y);
-
       // 앞으로 갔다가 뒤로 가는 경우.
       if (pressIndex.value <= areaIndex) {
         const isFrontBack = pressingArr.find((val) => val > areaIndex);
@@ -78,17 +80,26 @@ function GestureCircle({
         }
       }
 
-      if (!schedules.includes(areaIndex)) {
+      if (!pressingArr.includes(areaIndex)) {
         setPressingArr((prev) => [...prev, areaIndex]);
       }
     })
     .onFinalize(() => {
       const newPressingArr = Array.from(new Set(pressingArr));
       setSelectedTimeArray(newPressingArr);
-      setSchedules((prev) => [...prev, ...new Array(newPressingArr)]);
+      setSchedules((prev) => [...prev, newPressingArr]);
       pressingArr.length !== 0 && setPressingArr([]);
       pressIndex.value = null;
     });
+
+  const checkSelectedTimeArrayIsEmpty = () => {
+    console.log(111);
+    if (selectedTimeArray?.length !== 0) {
+      console.log(222);
+      setSelectedTimeArray([]);
+    }
+    console.log(333);
+  };
 
   return (
     <GestureDetector gesture={gesture}>

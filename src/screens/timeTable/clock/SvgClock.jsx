@@ -34,6 +34,11 @@ function SvgClock({ selectedDate, selectedTimeArray, setSelectedTimeArray }) {
     };
   }, [selectedDate]);
 
+  useEffect(() => {
+    console.log("------selecteedTimeArray-----");
+    console.log(selectedTimeArray);
+  }, [selectedTimeArray]);
+
   return (
     <View style={[styles.clockBlock]}>
       <PieChart
@@ -41,7 +46,7 @@ function SvgClock({ selectedDate, selectedTimeArray, setSelectedTimeArray }) {
         outerRadius={radius}
         innerRadius={10}
         data={datas(schedules)}
-        padAngle={0.01}
+        padAngle={0.007}
         sort={(a, b) => a.key - b.key}
       >
         <Labels />
