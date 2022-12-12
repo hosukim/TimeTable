@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  Text,
   TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SubmitForm from "./form/SubmitForm";
 import ScheduleList from "./scheduleList/ScheduleList";
 import Tab from "./tab/Tab";
@@ -27,8 +27,9 @@ const Screen = () => {
   }, [selectedDate]);
 
   return (
-    <GestureHandlerRootView style={styles.wrap}>
+    <View style={styles.wrap}>
       <Tab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+
       <TimeTable
         selectedDate={selectedDate}
         selectedTimeArray={selectedTimeArray}
@@ -38,8 +39,7 @@ const Screen = () => {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.container}
-          keyboardVerticalOffset={100}
-        >
+          keyboardVerticalOffset={100}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <SubmitForm
               selectedDate={selectedDate}
@@ -50,18 +50,18 @@ const Screen = () => {
         </KeyboardAvoidingView>
       )}
       <ScheduleList selectedDate={selectedDate} />
-    </GestureHandlerRootView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   wrap: {
-    // flex: 1,
-    width: "100%",
-    height: "100%",
+    flex: 1,
+    // width: "100%",
+    // height: "100%",
     paddingLeft: 10,
     paddingRight: 10,
-    position: "relative",
+    // position: "relative",
   },
   container: {
     flex: 1,
